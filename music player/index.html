@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <div class="music-card">
+        <div id="resim"></div>
+        <div class="track-slider">
+          <input
+            type="range"
+            value="0"
+            min="1"
+            max="100"
+            id="track-slider"
+            class="track-slider"
+          />
+        </div>
+        <div class="icons">
+          <div>
+            <img src="img/left2.webp" class="icon" id="left" />
+            <img src="img/play2.webp" class="icon" id="play" />
+            <img src="img/right.webp" class="icon" id="right" />
+          </div>
+          <div class="volume">
+            <img src="img/volume.png" class="icon" id="volume" />
+            <input
+              type="range"
+              min="1"
+              max="100"
+              value="60"
+              id="volume-slider"
+            />
+          </div>
+        </div>
+        <div class="title">
+          <span class="song-desc">Now Playing</span>
+          <h2 id="isim">Hydelic - Yours Forever</h2>
+        </div>
+        <audio id="ses" src="music/connected.m4a"></audio>
+      </div>
+    </div>
+  </body>
+</html>
