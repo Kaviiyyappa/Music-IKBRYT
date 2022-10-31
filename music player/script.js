@@ -1,64 +1,64 @@
-const musicData = [
+const SONG_LIST = [
   {
-    isim: "Hydelic - Yours Forever",
+    songName: "Hydelic - Yours Forever",
     music: "music/connected.m4a",
-    resim: "img/forever.jpg",
-    arkaplan: "img/ocean.jpg",
+    album: "img/forever.jpg",
+    background: "img/ocean.jpg",
   },
   {
-    isim: "SYML - Mr Sandman",
+    songName: "SYML - Mr Sandman",
     music: "music/sandman.m4a",
-    resim: "img/mrsandman.jpg",
-    arkaplan: "img/sky4.jpg",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
   },
   {
-    isim: "Brand X Music - Into The Light",
+    songName: "Brand X Music - Into The Light",
     music: "music/light.m4a",
-    resim: "img/intothelight.jpg",
-    arkaplan: "img/sky2.jpg",
+    album: "img/intothelight.jpg",
+    background: "img/sky2.jpg",
   },
   {
-    isim: "NF - Hate Myself",
+    songName: "NF - Hate Myself",
     music: "music/nf.m4a",
-    resim: "img/nf.jpg",
-    arkaplan: "img/black4.jpg",
+    album: "img/nf.jpg",
+    background: "img/black4.jpg",
   },
   {
-    isim: "Secession Studios - Past in Flames",
+    songName: "Secession Studios - Past in Flames",
     music: "music/flames.m4a",
-    resim: "img/flames.jpg",
-    arkaplan: "img/flames2.jpg",
+    album: "img/flames.jpg",
+    background: "img/flames2.jpg",
   },
   {
-    isim: "Tom Odell - Another Love",
+    songName: "Tom Odell - Another Love",
     music: "music/another.mp3",
-    resim: "img/another.jpg",
-    arkaplan: "img/love2.jpg",
+    album: "img/another.jpg",
+    background: "img/love2.jpg",
   },
   {
-    isim: "Badfinger - Baby Blue",
+    songName: "Badfinger - Baby Blue",
     music: "music/blue.m4a",
-    resim: "img/babyblue.jpg",
-    arkaplan: "img/blue5.jpg",
+    album: "img/babyblue.jpg",
+    background: "img/blue5.jpg",
   },
   {
-    isim: "Eminem - Lose Yourself",
+    songName: "Eminem - Lose Yourself",
     music: "music/eminem.m4a",
-    resim: "img/eminem-album.jpg",
-    arkaplan: "img/lose5.jpg",
+    album: "img/eminem-album.jpg",
+    background: "img/lose5.jpg",
   },
 ];
 let updateTrack;
 let isPlayBtnClick = false;
 let arrayCount = 0;
 let playState = 0;
-const music = document.getElementById("ses");
+const music = document.getElementById("music");
 let currentMusic = document.getElementById("currentMusic");
 let volumeSlider = document.getElementById("volume-slider");
 let trackSlider = document.getElementById("track-slider");
-const resim = document.getElementById("resim");
-const isim = document.getElementById("isim");
-const arkaplan = document.getElementById("container");
+const albumImg = document.getElementById("album-img");
+const currentSongName = document.getElementById("current-song-name");
+const backgroundImg = document.getElementById("container");
 const play = document.getElementById("play");
 const rightBtn = document.getElementById("right");
 const leftBtn = document.getElementById("left");
@@ -93,20 +93,20 @@ function swapBtn(way) {
 }
 
 function disableSwap() {
-  if (arrayCount >= musicData.length) {
+  if (arrayCount >= SONG_LIST.length) {
     return (arrayCount = 0);
   } else if (arrayCount < 0) {
-    return (arrayCount = Number(`${musicData.length - 1}`));
+    return (arrayCount = Number(`${SONG_LIST.length - 1}`));
   }
 }
 
 function changeSwapStyle() {
-  resim.style.background = `url(${musicData[arrayCount].resim}) no-repeat  center center`;
-  resim.style.backgroundSize = "cover";
-  arkaplan.style.background = `url(${musicData[arrayCount].arkaplan}) no-repeat  center center`;
-  arkaplan.style.backgroundSize = "cover";
-  isim.innerHTML = `${musicData[arrayCount].isim}`;
-  music.src = `${musicData[arrayCount].music}`;
+  albumImg.style.background = `url(${SONG_LIST[arrayCount].album}) no-repeat  center center`;
+  albumImg.style.backgroundSize = "cover";
+  backgroundImg.style.background = `url(${SONG_LIST[arrayCount].background}) no-repeat  center center`;
+  backgroundImg.style.backgroundSize = "cover";
+  currentSongName.innerHTML = `${SONG_LIST[arrayCount].songName}`;
+  music.src = `${SONG_LIST[arrayCount].music}`;
 }
 
 function audioPlay() {
@@ -142,7 +142,7 @@ function seekUpdate() {
 
 function autoSongChange() {
   arrayCount++;
-  if (arrayCount >= musicData.length - 1) {
+  if (arrayCount >= SONG_LIST.length - 1) {
     arrayCount = 0;
   }
   clearInterval(updateTrack);
