@@ -50,8 +50,10 @@ const SONG_LIST = [
 ];
 let updateTrack;
 let isPlayBtnClick = false;
+let isMixBtnClick = false;
 let arrayCount = 0;
 let playState = 0;
+let changeWarningText = document.getElementById("change-warning")
 const music = document.getElementById("music");
 let currentMusic = document.getElementById("currentMusic");
 let volumeSlider = document.getElementById("volume-slider");
@@ -62,6 +64,7 @@ const backgroundImg = document.getElementById("container");
 const play = document.getElementById("play");
 const rightBtn = document.getElementById("right");
 const leftBtn = document.getElementById("left");
+const mixBtn = document.getElementById("mix");
 
 // EVENT LISTENER
 rightBtn.addEventListener("click", changeSong);
@@ -71,16 +74,19 @@ volumeSlider.addEventListener("change", changeVolume);
 trackSlider.addEventListener("change", changeTrack);
 trackSlider.addEventListener("change", seekUpdate);
 music.addEventListener("ended", autoSongChange);
+mixBtn.addEventListener("click", changeToMixMode)
 
 // FUNCTION
 
 function changeSong(e) {
   let way = e.target;
+  mixSongs()
   swapBtn(way);
   changeSwapStyle();
   if (isPlayBtnClick) {
     music.play();
   }
+  console.log(arrayCount)
 }
 
 function swapBtn(way) {
@@ -141,12 +147,42 @@ function seekUpdate() {
 }
 
 function autoSongChange() {
-  arrayCount++;
-  if (arrayCount >= SONG_LIST.length - 1) {
-    arrayCount = 0;
+  if(isMixBtnClick){
+    mixSongs()
   }
+  else{
+    arrayCount++;
+  }
+  resetAutoChangeIfEnd()
   clearInterval(updateTrack);
   changeSwapStyle();
   updateTrack = setInterval(seekUpdate, 1000);
   music.play();
 }
+
+function resetAutoChangeIfEnd(){
+  if (arrayCount >= SONG_LIST.length - 1) {
+    arrayCount = 0;
+  }
+}
+
+function changeToMixMode(){
+  if(!isMixBtnClick){
+    isMixBtnClick = true;
+    ChangeWarning("Mix all")
+  }
+  else{
+    isMixBtnClick = false
+  }
+}
+
+function mixSongs(){
+  if(isMixBtnClick){
+    arrayCount = Math.floor(Math.random() * SONG_LIST.length)
+  }
+}
+
+function ChangeWarning(text){
+  return changeWarningText.innerText = text
+}
+
