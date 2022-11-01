@@ -113,7 +113,7 @@ function audioPlay() {
   playState++;
   if (playState === 1) {
     isPlayBtnClick = true;
-    play.src = "img/pause.webp";
+    play.src = "img/pause.png";
     music.play();
   } else if (playState === 2) {
     isPlayBtnClick = false;
