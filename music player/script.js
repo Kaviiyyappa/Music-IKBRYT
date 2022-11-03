@@ -55,7 +55,7 @@ let isRepeatBtnClick = false;
 let mixModeTxt = "Mix all"
 let repeatModeTxt = "Repeat"
 let arrayCount = 0;
-let playState = 0;
+let playState = false;
 let changeWarningText = document.getElementById("change-warning")
 const music = document.getElementById("music");
 let currentMusic = document.getElementById("currentMusic");
@@ -127,16 +127,17 @@ function changeSwapStyle() {
 }
 
 function audioPlay() {
-  playState++;
-  if (playState === 1) {
+  if (!playState) {
+    playState = true
     isPlayBtnClick = true;
     play.src = "img/pause.png";
     music.play();
-  } else if (playState === 2) {
+  } 
+  else{
+    playState = false
     isPlayBtnClick = false;
     play.src = "img/play2.webp";
     music.pause();
-    playState = 0;
   }
   updateTrack = setInterval(seekUpdate, 1000);
 }
@@ -162,7 +163,7 @@ function autoSongChange() {
   repeatModeSongChange()
   resetAutoChangeIfEnd()
   updateTrack = setInterval(seekUpdate, 1000);
-  music.play();
+  playState ? music.play() : music.pause()
 }
 
 function mixModeSongChange(){
@@ -178,12 +179,7 @@ function mixModeSongChange(){
 }
 
 function repeatModeSongChange(){
-  if(isRepeatBtnClick){
-    clearInterval(updateTrack);
-  }
-  else{
-    changeSwapStyle();
-  }
+  isRepeatBtnClick ? clearInterval(updateTrack) : changeSwapStyle()
 }
 
 function resetAutoChangeIfEnd(){
@@ -224,7 +220,7 @@ function repeatModeActive(){
 
 function ifModeActive(button, text){
   button.style.transform = "scale(1.3)"
-  changeWarning(text)
+  changeWarningText.innerText = text
 }
 
 function changeWarning(text){
