@@ -50,7 +50,10 @@ const SONG_LIST = [
 ];
 let updateTrack;
 let isPlayBtnClick = false;
-let isMixBtnClick = false;
+let isMixBtnClick = false ;
+let isRepeatBtnClick = false;
+let mixModeTxt = "Mix all"
+let repeatModeTxt = "Repeat"
 let arrayCount = 0;
 let playState = 0;
 let changeWarningText = document.getElementById("change-warning")
@@ -65,8 +68,9 @@ const play = document.getElementById("play");
 const rightBtn = document.getElementById("right");
 const leftBtn = document.getElementById("left");
 const mixBtn = document.getElementById("mix");
-
+const repeatBtn = document.getElementById("repeat")
 // EVENT LISTENER
+
 rightBtn.addEventListener("click", changeSong);
 leftBtn.addEventListener("click", changeSong);
 play.addEventListener("click", audioPlay);
@@ -74,7 +78,8 @@ volumeSlider.addEventListener("change", changeVolume);
 trackSlider.addEventListener("change", changeTrack);
 trackSlider.addEventListener("change", seekUpdate);
 music.addEventListener("ended", autoSongChange);
-mixBtn.addEventListener("click", changeToMixMode)
+mixBtn.addEventListener("click", mixModeActive)
+repeatBtn.addEventListener("click", repeatModeActive)
 
 // FUNCTION
 
@@ -87,6 +92,12 @@ function changeSong(e) {
     music.play();
   }
   console.log(arrayCount)
+}
+
+function mixSongs(){
+  if(isMixBtnClick){
+    arrayCount = Math.floor(Math.random() * SONG_LIST.length)
+  }
 }
 
 function swapBtn(way) {
@@ -147,17 +158,32 @@ function seekUpdate() {
 }
 
 function autoSongChange() {
+  mixModeSongChange()
+  repeatModeSongChange()
+  resetAutoChangeIfEnd()
+  updateTrack = setInterval(seekUpdate, 1000);
+  music.play();
+}
+
+function mixModeSongChange(){
   if(isMixBtnClick){
     mixSongs()
   }
-  else{
-    arrayCount++;
+  else if(isRepeatBtnClick){
+    return
   }
-  resetAutoChangeIfEnd()
-  clearInterval(updateTrack);
-  changeSwapStyle();
-  updateTrack = setInterval(seekUpdate, 1000);
-  music.play();
+  else{
+    arrayCount++
+  }
+}
+
+function repeatModeSongChange(){
+  if(isRepeatBtnClick){
+    clearInterval(updateTrack);
+  }
+  else{
+    changeSwapStyle();
+  }
 }
 
 function resetAutoChangeIfEnd(){
@@ -166,23 +192,41 @@ function resetAutoChangeIfEnd(){
   }
 }
 
-function changeToMixMode(){
-  if(!isMixBtnClick){
-    isMixBtnClick = true;
-    ChangeWarning("Mix all")
+function mixModeActive(){
+  if(isRepeatBtnClick){
+    return
   }
-  else{
+  else if(!isMixBtnClick){
+    ifModeActive(mixBtn, mixModeTxt)
+    isMixBtnClick = true
+  }
+  else if(isMixBtnClick){
+    mixBtn.style.transform = "scale(1)"
     isMixBtnClick = false
+    changeWarning("")
   }
 }
 
-function mixSongs(){
+function repeatModeActive(){
   if(isMixBtnClick){
-    arrayCount = Math.floor(Math.random() * SONG_LIST.length)
+    return 
+  }
+  else if(!isRepeatBtnClick){
+    isRepeatBtnClick = true
+    ifModeActive(repeatBtn, repeatModeTxt)
+  }
+  else if(isRepeatBtnClick){
+    isRepeatBtnClick = false
+    repeatBtn.style.transform = "scale(1)"
+    changeWarning("")
   }
 }
 
-function ChangeWarning(text){
+function ifModeActive(button, text){
+  button.style.transform = "scale(1.3)"
+  changeWarning(text)
+}
+
+function changeWarning(text){
   return changeWarningText.innerText = text
 }
-
