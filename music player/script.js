@@ -49,14 +49,13 @@ const SONG_LIST = [
   },
 ];
 let updateTrack;
-let isPlayBtnClick = false;
-let isMixBtnClick = false ;
+let isMixBtnClick = false;
 let isRepeatBtnClick = false;
-let mixModeTxt = "Mix all"
-let repeatModeTxt = "Repeat"
+let isAddBtnClick = false;
+let mixModeTxt = "Mix all";
+let repeatModeTxt = "Repeat";
 let arrayCount = 0;
-let playState = false;
-let changeWarningText = document.getElementById("change-warning")
+let changeWarningText = document.getElementById("change-warning");
 const music = document.getElementById("music");
 let currentMusic = document.getElementById("currentMusic");
 let volumeSlider = document.getElementById("volume-slider");
@@ -68,7 +67,13 @@ const play = document.getElementById("play");
 const rightBtn = document.getElementById("right");
 const leftBtn = document.getElementById("left");
 const mixBtn = document.getElementById("mix");
-const repeatBtn = document.getElementById("repeat")
+const repeatBtn = document.getElementById("repeat");
+const menuIcon = document.getElementById("menu-icon");
+const menuCancelIcon = document.getElementById("cancel-icon")
+const menu = document.querySelector("nav");
+const addBtn = document.getElementById("add-icon");
+const newSongContainer = document.getElementById("new-song-container");
+
 // EVENT LISTENER
 
 rightBtn.addEventListener("click", changeSong);
@@ -78,25 +83,27 @@ volumeSlider.addEventListener("change", changeVolume);
 trackSlider.addEventListener("change", changeTrack);
 trackSlider.addEventListener("change", seekUpdate);
 music.addEventListener("ended", autoSongChange);
-mixBtn.addEventListener("click", mixModeActive)
-repeatBtn.addEventListener("click", repeatModeActive)
+mixBtn.addEventListener("click", mixModeActive);
+repeatBtn.addEventListener("click", repeatModeActive);
+menuIcon.addEventListener("click", openMenu);
+menuCancelIcon.addEventListener("click", cancelMenu)
+addBtn.addEventListener("click", newSongPage);
 
 // FUNCTION
 
 function changeSong(e) {
   let way = e.target;
-  mixSongs()
+  mixSongs();
   swapBtn(way);
   changeSwapStyle();
-  if (isPlayBtnClick) {
-    music.play();
+  if(play.textContent === "❚ ❚"){
+    music.play()
   }
-  console.log(arrayCount)
 }
 
-function mixSongs(){
-  if(isMixBtnClick){
-    arrayCount = Math.floor(Math.random() * SONG_LIST.length)
+function mixSongs() {
+  if (isMixBtnClick) {
+    arrayCount = Math.floor(Math.random() * SONG_LIST.length);
   }
 }
 
@@ -127,18 +134,9 @@ function changeSwapStyle() {
 }
 
 function audioPlay() {
-  if (!playState) {
-    playState = true
-    isPlayBtnClick = true;
-    play.src = "img/pause.png";
-    music.play();
-  } 
-  else{
-    playState = false
-    isPlayBtnClick = false;
-    play.src = "img/play2.webp";
-    music.pause();
-  }
+  const icon = music.paused ? "❚ ❚" : "►";
+  play.textContent = icon;
+  music.paused ? music.play() : music.pause();
   updateTrack = setInterval(seekUpdate, 1000);
 }
 
@@ -159,70 +157,86 @@ function seekUpdate() {
 }
 
 function autoSongChange() {
-  mixModeSongChange()
-  repeatModeSongChange()
-  resetAutoChangeIfEnd()
+  mixModeSongChange();
+  repeatModeSongChange();
+  resetAutoChangeIfEnd();
   updateTrack = setInterval(seekUpdate, 1000);
-  playState ? music.play() : music.pause()
-}
-
-function mixModeSongChange(){
-  if(isMixBtnClick){
-    mixSongs()
-  }
-  else if(isRepeatBtnClick){
-    return
-  }
-  else{
-    arrayCount++
+  if(play.textContent === "❚ ❚"){
+    music.play()
   }
 }
 
-function repeatModeSongChange(){
-  isRepeatBtnClick ? clearInterval(updateTrack) : changeSwapStyle()
+function mixModeSongChange() {
+  if (isMixBtnClick) {
+    mixSongs();
+  } else if (isRepeatBtnClick) {
+    return;
+  } else {
+    arrayCount++;
+  }
 }
 
-function resetAutoChangeIfEnd(){
+function repeatModeSongChange() {
+  isRepeatBtnClick ? clearInterval(updateTrack) : changeSwapStyle();
+}
+
+function resetAutoChangeIfEnd() {
   if (arrayCount >= SONG_LIST.length - 1) {
     arrayCount = 0;
   }
 }
 
-function mixModeActive(){
-  if(isRepeatBtnClick){
-    return
-  }
-  else if(!isMixBtnClick){
-    ifModeActive(mixBtn, mixModeTxt)
-    isMixBtnClick = true
-  }
-  else if(isMixBtnClick){
-    mixBtn.style.transform = "scale(1)"
-    isMixBtnClick = false
-    changeWarning("")
+function mixModeActive() {
+  if (isRepeatBtnClick) {
+    return;
+  } else if (!isMixBtnClick) {
+    ifModeActive(mixBtn, mixModeTxt);
+    isMixBtnClick = true;
+  } else if (isMixBtnClick) {
+    mixBtn.style.transform = "scale(1)";
+    isMixBtnClick = false;
+    changeWarning("");
   }
 }
 
-function repeatModeActive(){
-  if(isMixBtnClick){
-    return 
-  }
-  else if(!isRepeatBtnClick){
-    isRepeatBtnClick = true
-    ifModeActive(repeatBtn, repeatModeTxt)
-  }
-  else if(isRepeatBtnClick){
-    isRepeatBtnClick = false
-    repeatBtn.style.transform = "scale(1)"
-    changeWarning("")
+function repeatModeActive() {
+  if (isMixBtnClick) {
+    return;
+  } else if (!isRepeatBtnClick) {
+    isRepeatBtnClick = true;
+    ifModeActive(repeatBtn, repeatModeTxt);
+  } else if (isRepeatBtnClick) {
+    isRepeatBtnClick = false;
+    repeatBtn.style.transform = "scale(1)";
+    changeWarning("");
   }
 }
 
-function ifModeActive(button, text){
-  button.style.transform = "scale(1.3)"
-  changeWarningText.innerText = text
+function ifModeActive(button, text) {
+  button.style.transform = "scale(1.3)";
+  changeWarning(text);
 }
 
-function changeWarning(text){
-  return changeWarningText.innerText = text
+function changeWarning(text) {
+  return (changeWarningText.innerText = text);
+}
+
+function openMenu() {
+  menu.style.left = "0";
+}
+
+function cancelMenu(){
+  menu.style.left = "-20rem"
+}
+
+function newSongPage() {
+  addSongCondition();
+  isAddBtnClick
+    ? (newSongContainer.style.display = "flex")
+    : (newSongContainer.style.display = "none");
+}
+
+function addSongCondition() {
+  
+  !isAddBtnClick ? (isAddBtnClick = true) : (isAddBtnClick = false);
 }

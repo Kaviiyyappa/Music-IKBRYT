@@ -10,6 +10,24 @@
   </head>
   <body>
     <div class="container" id="container">
+      <img src="img/library.png" class="icon" id="menu-icon" />
+
+      <nav>
+        <img src="img/cancel.png" class="icon" id="cancel-icon">
+        <h3>Music Player</h3>
+        <div>
+          <img src="img/add.png" class="icon add-icon" id="add-icon" />
+          <span>Add New Song</span>
+          <div class="new-song-container" id="new-song-container">
+            <form>
+              <label for="file-picker">Drop your song here</label>
+            <input type="file" id="file-picker" />
+            <input type="submit">
+          </form>
+          </div>
+        </div>
+      </nav>
+
       <div class="music-card">
         <div id="album-img"></div>
         <div class="track-slider">
@@ -24,12 +42,13 @@
         </div>
         <div class="icons">
           <div>
-            <img src="img/mix.png" class="icon" id="mix">
+            <img src="img/mix.png" class="icon" id="mix" />
             <img src="img/prev-song.png" class="icon" id="left" />
-            <img src="img/play2.webp" class="icon" id="play" />
+            <span src="img/play2.webp" class="icon" id="play">►</span>
             <img src="img/next-song.png" class="icon" id="right" />
-            <img src="img/repeat.png" class="icon" id="repeat">
+            <img src="img/repeat.png" class="icon" id="repeat" />
           </div>
+
           <div class="volume">
             <img src="img/volume.png" class="icon" id="volume" />
             <input
