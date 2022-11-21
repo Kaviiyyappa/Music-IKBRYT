@@ -49,17 +49,15 @@ const SONG_LIST = [
   },
 ];
 let updateTrack;
-let isMixBtnClick = false;
-let isRepeatBtnClick = false;
-let isAddBtnClick = false;
+let isMixBtnClick, isRepeatBtnClick, isAddBtnClick = false;
 let mixModeTxt = "Mix all";
 let repeatModeTxt = "Repeat";
 let arrayCount = 0;
 let changeWarningText = document.getElementById("change-warning");
-const music = document.getElementById("music");
 let currentMusic = document.getElementById("currentMusic");
 let volumeSlider = document.getElementById("volume-slider");
 let trackSlider = document.getElementById("track-slider");
+const music = document.getElementById("music");
 const albumImg = document.getElementById("album-img");
 const currentSongName = document.getElementById("current-song-name");
 const backgroundImg = document.getElementById("container");
@@ -71,8 +69,9 @@ const repeatBtn = document.getElementById("repeat");
 const menuIcon = document.getElementById("menu-icon");
 const menuCancelIcon = document.getElementById("cancel-icon")
 const menu = document.querySelector("nav");
-const addBtn = document.getElementById("add-icon");
+const addBtn = document.getElementById("add-song-btn");
 const newSongContainer = document.getElementById("new-song-container");
+const file = document.getElementById("file-picker")
 
 // EVENT LISTENER
 
@@ -89,7 +88,14 @@ menuIcon.addEventListener("click", openMenu);
 menuCancelIcon.addEventListener("click", cancelMenu)
 addBtn.addEventListener("click", newSongPage);
 
+
 // FUNCTION
+
+function local(){
+  let newSongJson = localStorage.getItem("addedSongs")
+   newSongJson = JSON.parse(newSongJson)
+   SONG_LIST.push(newSongJson)
+}
 
 function changeSong(e) {
   let way = e.target;
@@ -99,6 +105,7 @@ function changeSong(e) {
   if(play.textContent === "❚ ❚"){
     music.play()
   }
+  console.log(arrayCount)
 }
 
 function mixSongs() {
@@ -157,14 +164,17 @@ function seekUpdate() {
 }
 
 function autoSongChange() {
+  updateTrack = setInterval(seekUpdate, 1000);
   mixModeSongChange();
   repeatModeSongChange();
-  resetAutoChangeIfEnd();
-  updateTrack = setInterval(seekUpdate, 1000);
+  resetAutoChangeIfEnd(updateTrack);
   if(play.textContent === "❚ ❚"){
     music.play()
   }
+  console.log(arrayCount)
 }
+
+//MİX & REPEAT MODE
 
 function mixModeSongChange() {
   if (isMixBtnClick) {
@@ -180,9 +190,10 @@ function repeatModeSongChange() {
   isRepeatBtnClick ? clearInterval(updateTrack) : changeSwapStyle();
 }
 
-function resetAutoChangeIfEnd() {
+function resetAutoChangeIfEnd(clear) {
   if (arrayCount >= SONG_LIST.length - 1) {
     arrayCount = 0;
+    clearInterval(clear)
   }
 }
 
@@ -229,6 +240,11 @@ function cancelMenu(){
   menu.style.left = "-20rem"
 }
 
+//ADD NEW SONG (only work locally)
+
+file.addEventListener("change", addNewSong, false)
+window.addEventListener("DOMContentLoaded", local)
+
 function newSongPage() {
   addSongCondition();
   isAddBtnClick
@@ -237,6 +253,23 @@ function newSongPage() {
 }
 
 function addSongCondition() {
-  
   !isAddBtnClick ? (isAddBtnClick = true) : (isAddBtnClick = false);
+}
+
+function addNewSong(){
+  for(let i = 0; i < this.files.length; i++){
+    const newAudio = document.createElement("audio")
+    newAudio.src = URL.createObjectURL(this.files[i])
+    newAudio.onload = () => {
+      URL.revokeObjectURL(newAudio.src)
+    }
+    const newSongObj = {
+      music : newAudio.src,
+      songName : "deneme",
+      background : "img/sample.jpg",
+      album : "img/album-sample.jpg"
+    }
+    SONG_LIST.push(newSongObj) 
+    localStorage.setItem("addedSongs", JSON.stringify(newSongObj))
+  }
 }
