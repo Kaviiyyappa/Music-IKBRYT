@@ -26,6 +26,7 @@ body {
   background-position: center center;
 }
 
+/*nav*/
 #menu-icon {
   position: absolute;
   left: .5rem;
@@ -45,6 +46,8 @@ nav {
   line-height: 4rem;
   text-align: center;
   z-index: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 nav > div {
@@ -67,12 +70,7 @@ nav > div:hover{
 
 nav span{
   padding-left: .5rem;
-}
-
-.new-song-container {
-  display: none;
-  align-items: baseline;
-  font-size: .9rem;
+  user-select: none;
 }
 
 nav .icon {
@@ -85,6 +83,29 @@ nav .icon {
   margin: .5rem 0 0 .5rem;
 }
 
+#all-songs{
+  display: none;
+}
+
+.allSongsListElements{
+  padding: .5rem;
+  margin-bottom: .2rem;
+  line-height: 2;
+}
+.allSongsListElements:hover{
+  cursor: pointer;
+  background-color: #333;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.new-song-container {
+  display: none;
+  align-items: baseline;
+  font-size: .9rem;
+}
+
+/*card*/
 .music-card {
   display: grid;
   align-items: center;

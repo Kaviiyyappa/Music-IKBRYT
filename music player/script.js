@@ -49,7 +49,7 @@ const SONG_LIST = [
   },
 ];
 let updateTrack;
-let isMixBtnClick, isRepeatBtnClick, isAddBtnClick = false;
+let isMixBtnClick, isRepeatBtnClick = false;
 let mixModeTxt = "Mix all";
 let repeatModeTxt = "Repeat";
 let arrayCount = 0;
@@ -69,9 +69,12 @@ const repeatBtn = document.getElementById("repeat");
 const menuIcon = document.getElementById("menu-icon");
 const menuCancelIcon = document.getElementById("cancel-icon")
 const menu = document.querySelector("nav");
+const allSongsParent = document.getElementById("all-songs")
+const allSongContainer = document.getElementById("all-songs-container")
 const addBtn = document.getElementById("add-song-btn");
 const newSongContainer = document.getElementById("new-song-container");
 const file = document.getElementById("file-picker")
+
 
 // EVENT LISTENER
 
@@ -240,20 +243,53 @@ function cancelMenu(){
   menu.style.left = "-20rem"
 }
 
+//ALL SONG LIST
+window.addEventListener("DOMContentLoaded", getAllSongList) 
+allSongContainer.addEventListener("click", showAllSongList)
+
+
+function getAllSongList(){
+  for(let i = 0; i<SONG_LIST.length; i++){
+    let li = document.createElement("li")
+    li.innerHTML = SONG_LIST[i].songName
+    li.classList.add("allSongsListElements")
+    allSongAppend(li)
+  }
+  let chooseSong = Array.from(document.querySelectorAll(".allSongsListElements"))
+  chooseSong.forEach(
+    function(e){
+      e.addEventListener("click", function(){
+        let song = chooseSong.indexOf(e)
+        console.log(song)
+       arrayCount = song
+       changeSwapStyle()
+      })
+      
+    }  
+  )
+  console.log(arrayCount)
+}
+function allSongAppend(li){
+  return allSongsParent.append(li)
+}
+
+
+function showAllSongList(){
+allSongsParent.style.display === "block" ? 
+allSongsParent.style.display = "none" : 
+allSongsParent.style.display = "block"
+}
+
+
 //ADD NEW SONG (only work locally)
 
 file.addEventListener("change", addNewSong, false)
 window.addEventListener("DOMContentLoaded", local)
 
 function newSongPage() {
-  addSongCondition();
-  isAddBtnClick
-    ? (newSongContainer.style.display = "flex")
-    : (newSongContainer.style.display = "none");
-}
-
-function addSongCondition() {
-  !isAddBtnClick ? (isAddBtnClick = true) : (isAddBtnClick = false);
+newSongContainer.style.display === "block" ? 
+newSongContainer.style.display = "none" : 
+newSongContainer.style.display = "block"
 }
 
 function addNewSong(){

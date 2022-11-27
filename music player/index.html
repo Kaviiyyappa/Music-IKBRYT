@@ -15,23 +15,24 @@
       <nav>
         <img src="img/cancel.png" class="icon" id="cancel-icon">
         <h3>Music Player</h3>
-        <div class="all-songs">
+        <div class="all-songs" id="all-songs-container">
           <div class="menu-item">
           <img src="img/all-songs.webp" class="icon">
           <span>All Songs</span>
         </div>
-        <ul id="all-songs"></ul>
         </div>
+        <ul id="all-songs"></ul>
         <div id="add-song-btn">
           <div class="menu-item">
           <img src="img/add.png" class="icon add-icon" id="add-icon" />
           <span>Add New Song</span>
         </div>
-          <div class="new-song-container" id="new-song-container">
-            <form>
-            <input type="file" id="file-picker" accept="audio/*" multiple/>
-          </form>
-          </div>
+          
+        </div>
+        <div class="new-song-container" id="new-song-container">
+          <form>
+          <input type="file" id="file-picker" accept="audio/*" multiple/>
+        </form>
         </div>
       </nav>
 
