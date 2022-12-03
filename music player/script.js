@@ -49,7 +49,8 @@ const SONG_LIST = [
   },
 ];
 let updateTrack;
-let isMixBtnClick, isRepeatBtnClick = false;
+let isMixBtnClick,
+  isRepeatBtnClick = false;
 let mixModeTxt = "Mix all";
 let repeatModeTxt = "Repeat";
 let arrayCount = 0;
@@ -67,54 +68,27 @@ const leftBtn = document.getElementById("left");
 const mixBtn = document.getElementById("mix");
 const repeatBtn = document.getElementById("repeat");
 const menuIcon = document.getElementById("menu-icon");
-const menuCancelIcon = document.getElementById("cancel-icon")
+const menuCancelIcon = document.getElementById("cancel-icon");
 const menu = document.querySelector("nav");
-const allSongsParent = document.getElementById("all-songs")
-const allSongContainer = document.getElementById("all-songs-container")
+const allSongsParent = document.getElementById("all-songs");
+const allSongContainer = document.getElementById("all-songs-container");
 const addBtn = document.getElementById("add-song-btn");
 const newSongContainer = document.getElementById("new-song-container");
-const file = document.getElementById("file-picker")
+const file = document.getElementById("file-picker");
 
-
-// EVENT LISTENER
+// Event listeners
 
 rightBtn.addEventListener("click", changeSong);
 leftBtn.addEventListener("click", changeSong);
 play.addEventListener("click", audioPlay);
-volumeSlider.addEventListener("change", changeVolume);
-trackSlider.addEventListener("change", changeTrack);
-trackSlider.addEventListener("change", seekUpdate);
-music.addEventListener("ended", autoSongChange);
-mixBtn.addEventListener("click", mixModeActive);
-repeatBtn.addEventListener("click", repeatModeActive);
-menuIcon.addEventListener("click", openMenu);
-menuCancelIcon.addEventListener("click", cancelMenu)
-addBtn.addEventListener("click", newSongPage);
-
-
-// FUNCTION
-
-function local(){
-  let newSongJson = localStorage.getItem("addedSongs")
-   newSongJson = JSON.parse(newSongJson)
-   SONG_LIST.push(newSongJson)
-}
 
 function changeSong(e) {
   let way = e.target;
-  mixSongs();
   swapBtn(way);
   changeSwapStyle();
-  if(play.textContent === "❚ ❚"){
-    music.play()
-  }
-  console.log(arrayCount)
-}
-
-function mixSongs() {
-  if (isMixBtnClick) {
-    arrayCount = Math.floor(Math.random() * SONG_LIST.length);
-  }
+  playState();
+  mixSongs();
+  console.log(arrayCount);
 }
 
 function swapBtn(way) {
@@ -134,6 +108,18 @@ function disableSwap() {
   }
 }
 
+function playState() {
+  if (play.textContent === "❚ ❚") {
+    music.play();
+  }
+}
+
+function mixSongs() {
+  if (isMixBtnClick) {
+    arrayCount = Math.floor(Math.random() * SONG_LIST.length);
+  }
+}
+
 function changeSwapStyle() {
   albumImg.style.background = `url(${SONG_LIST[arrayCount].album}) no-repeat  center center`;
   albumImg.style.backgroundSize = "cover";
@@ -149,6 +135,13 @@ function audioPlay() {
   music.paused ? music.play() : music.pause();
   updateTrack = setInterval(seekUpdate, 1000);
 }
+
+//Slider events
+
+volumeSlider.addEventListener("change", changeVolume);
+trackSlider.addEventListener("change", changeTrack);
+trackSlider.addEventListener("change", seekUpdate);
+music.addEventListener("ended", autoSongChange);
 
 function changeVolume() {
   music.volume = volumeSlider.value / 100;
@@ -171,13 +164,14 @@ function autoSongChange() {
   mixModeSongChange();
   repeatModeSongChange();
   resetAutoChangeIfEnd(updateTrack);
-  if(play.textContent === "❚ ❚"){
-    music.play()
-  }
-  console.log(arrayCount)
+  playState();
+  console.log(arrayCount);
 }
 
-//MİX & REPEAT MODE
+//Mix & Repeat mode
+
+mixBtn.addEventListener("click", mixModeActive);
+repeatBtn.addEventListener("click", repeatModeActive);
 
 function mixModeSongChange() {
   if (isMixBtnClick) {
@@ -196,7 +190,7 @@ function repeatModeSongChange() {
 function resetAutoChangeIfEnd(clear) {
   if (arrayCount >= SONG_LIST.length - 1) {
     arrayCount = 0;
-    clearInterval(clear)
+    clearInterval(clear);
   }
 }
 
@@ -235,77 +229,87 @@ function changeWarning(text) {
   return (changeWarningText.innerText = text);
 }
 
+//Menu
+
+menuIcon.addEventListener("click", openMenu);
+menuCancelIcon.addEventListener("click", cancelMenu);
+
 function openMenu() {
   menu.style.left = "0";
 }
 
-function cancelMenu(){
-  menu.style.left = "-20rem"
+function cancelMenu() {
+  menu.style.left = "-20rem";
 }
 
-//ALL SONG LIST
-window.addEventListener("DOMContentLoaded", getAllSongList) 
-allSongContainer.addEventListener("click", showAllSongList)
+function styleChange(element) {
+  element.style.display === "block"
+    ? (element.style.display = "none")
+    : (element.style.display = "block");
+}
 
+//All song list
 
-function getAllSongList(){
-  for(let i = 0; i<SONG_LIST.length; i++){
-    let li = document.createElement("li")
-    li.innerHTML = SONG_LIST[i].songName
-    li.classList.add("allSongsListElements")
-    allSongAppend(li)
+window.addEventListener("DOMContentLoaded", getAllSongList);
+allSongContainer.addEventListener("click", showAllSongList);
+
+function getAllSongList() {
+  for (let i = 0; i < SONG_LIST.length; i++) {
+    let li = document.createElement("li");
+    li.innerHTML = SONG_LIST[i].songName;
+    li.classList.add("allSongsListElements");
+    allSongAppend(li);
   }
-  let chooseSong = Array.from(document.querySelectorAll(".allSongsListElements"))
-  chooseSong.forEach(
-    function(e){
-      e.addEventListener("click", function(){
-        let song = chooseSong.indexOf(e)
-        console.log(song)
-       arrayCount = song
-       changeSwapStyle()
-      })
-      
-    }  
-  )
-  console.log(arrayCount)
+  let chooseSong = Array.from(
+    document.querySelectorAll(".allSongsListElements")
+  );
+  chooseSong.forEach(function (e) {
+    e.addEventListener("click", function () {
+      let song = chooseSong.indexOf(e);
+      arrayCount = song;
+      changeSwapStyle();
+      playState()
+    });
+  });
 }
-function allSongAppend(li){
-  return allSongsParent.append(li)
+function allSongAppend(li) {
+  return allSongsParent.append(li);
 }
 
-
-function showAllSongList(){
-allSongsParent.style.display === "block" ? 
-allSongsParent.style.display = "none" : 
-allSongsParent.style.display = "block"
+function showAllSongList() {
+  styleChange(allSongsParent);
 }
 
+//Add new song (only work locally)
 
-//ADD NEW SONG (only work locally)
+addBtn.addEventListener("click", newSongPage);
+file.addEventListener("change", addNewSong, false);
+window.addEventListener("DOMContentLoaded", local);
 
-file.addEventListener("change", addNewSong, false)
-window.addEventListener("DOMContentLoaded", local)
+function local() {
+  let newSongJson = localStorage.getItem("addedSongs");
+  newSongJson = JSON.parse(newSongJson);
+  SONG_LIST.push(newSongJson);
+}
 
 function newSongPage() {
-newSongContainer.style.display === "block" ? 
-newSongContainer.style.display = "none" : 
-newSongContainer.style.display = "block"
+  styleChange(newSongContainer);
 }
 
-function addNewSong(){
-  for(let i = 0; i < this.files.length; i++){
-    const newAudio = document.createElement("audio")
-    newAudio.src = URL.createObjectURL(this.files[i])
+function addNewSong() {
+  for (let i = 0; i < this.files.length; i++) {
+    const newAudio = document.createElement("audio");
+    newAudio.src = URL.createObjectURL(this.files[i]);
     newAudio.onload = () => {
-      URL.revokeObjectURL(newAudio.src)
-    }
+      URL.revokeObjectURL(newAudio.src);
+    };
     const newSongObj = {
-      music : newAudio.src,
-      songName : "deneme",
-      background : "img/sample.jpg",
-      album : "img/album-sample.jpg"
-    }
-    SONG_LIST.push(newSongObj) 
-    localStorage.setItem("addedSongs", JSON.stringify(newSongObj))
+      music: newAudio.src,
+      songName: "deneme",
+      background: "img/sample.jpg",
+      album: "img/album-sample.jpg",
+    };
+    SONG_LIST.push(newSongObj);
+    localStorage.setItem("addedSongs", JSON.stringify(newSongObj));
   }
 }

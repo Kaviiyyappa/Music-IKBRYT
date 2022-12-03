@@ -38,17 +38,18 @@
 
       <div class="music-card">
         <div id="album-img"></div>
-        <div class="track-slider">
-          <input
-            type="range"
-            value="0"
-            min="1"
-            max="100"
-            id="track-slider"
-            class="track-slider"
-          />
-        </div>
+    
         <div class="icons">
+          <div class="track-slider">
+            <input
+              type="range"
+              value="0"
+              min="1"
+              max="100"
+              id="track-slider"
+              class="track-slider"
+            />
+          </div>
           <div>
             <img src="img/mix.png" class="icon" id="mix" />
             <img src="img/prev-song.png" class="icon" id="left" />
@@ -68,11 +69,11 @@
             />
           </div>
         </div>
-        <div>
+        <footer>
           <span class="title">Now Playing</span>
           <h2 id="current-song-name">Hydelic - Yours Forever</h2>
           <span id="change-warning"></span>
-        </div>
+        </footer>
         <audio id="music" src="music/connected.m4a"></audio>
       </div>
     </div>
