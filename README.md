@@ -1,6 +1,9 @@
 # Music Player
- + Simple music player with good quality background images and easy-to-understand controls. 
+ + Advanced Music Player with good quality background images and easy-to-understand controls. 
  + You can change songs, set volume and set forward the music.
+ + With repeat button you can repeat songs as much as you want.
+ + Mix button mixed all of your favorite songs.
+ + You can see all songs list from Menu button.
  + When the song ends, the next song starts playing immediately.
 
 # How to Download and run
@@ -12,25 +15,17 @@
 + If you are know what you are doing and gonna change locations or names, be sure to change them on the source code to.
 
 # If you want to add new songs
-+ In the short run I am gonna add this feature to the project but for now you must take this steps:
 + First of all, make sure the music is compatible with the browsers. mp3, vaw, ogg 
 + Send your song to music folder. Then send your image to img folder.
 + Open script.js file in your code editor. 
 + Inside the SONG_LIST array, create new object with the same variable names.
 + Fill the variable values with your song and image names. eg songName: "NF - Hate Myself"
++ Enjoy your music player.
 
 # What did I use while developing the project
 + VS Code for writing the code.
 + Pexels for download free images.
 + Adobe Photoshop for remove icons background.
-
-# Upcoming innovations
-+ Library for all songs
-+ Favorite button
-+ Library for favorite songs
-+ Add new song button for making easy to add new songs for everybody
-+ Mix all songs button
-+ Repeat current song button
 
 # The developers of the project
 Caner Güldüren
