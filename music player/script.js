@@ -1,52 +1,154 @@
 const SONG_LIST = [
   {
-    songName: "Hydelic - Yours Forever",
-    music: "music/connected.m4a",
-    album: "img/forever.jpg",
-    background: "img/ocean.jpg",
+    songName: "EPISODE 1",
+    music: "/music player/music/EP 1.m4a",
+    album: "img/VIP.jpg",
+    background: "img/VIP.jpg",
   },
   {
-    songName: "SYML - Mr Sandman",
-    music: "music/sandman.m4a",
+    songName: "EPISODE 2",
+    music: "/music player/music/EP 2.m4a",
     album: "img/mrsandman.jpg",
     background: "img/sky4.jpg",
   },
   {
-    songName: "Brand X Music - Into The Light",
-    music: "music/light.m4a",
+    songName: "EPISODE 3",
+    music: "/music player/music/EP 3.m4a",
     album: "img/intothelight.jpg",
     background: "img/sky2.jpg",
   },
   {
-    songName: "NF - Hate Myself",
-    music: "music/nf.m4a",
+    songName: "EPISODE 4",
+    music: "/music player/music/EP 4.m4a",
     album: "img/nf.jpg",
     background: "img/black4.jpg",
   },
   {
-    songName: "Secession Studios - Past in Flames",
-    music: "music/flames.m4a",
+    songName: "EPISODE 5",
+    music: "/music player/music/EP 5.m4a",
     album: "img/flames.jpg",
     background: "img/flames2.jpg",
   },
   {
-    songName: "Tom Odell - Another Love",
-    music: "music/another.mp3",
+    songName: "EPISODE 6",
+    music: "/music player/music/EP 6.m4a",
     album: "img/another.jpg",
     background: "img/love2.jpg",
   },
   {
-    songName: "Badfinger - Baby Blue",
-    music: "music/blue.m4a",
+    songName: "EPISODE 7",
+    music: "/music player/music/EP 7.m4a",
     album: "img/babyblue.jpg",
     background: "img/blue5.jpg",
   },
   {
-    songName: "Eminem - Lose Yourself",
-    music: "music/eminem.m4a",
+    songName: "EPISODE 8",
+    music: "/music player/music/EP 8.m4a",
     album: "img/eminem-album.jpg",
     background: "img/lose5.jpg",
   },
+   {
+    songName: "EPISODE 9",
+    music: "/music player/music/EP 9.m4a",
+    album: "img/eminem-album.jpg",
+    background: "img/lose5.jpg",
+  },
+ {
+    songName: "EPISODE 10",
+    music: "/music player/music/EP 10.m4a",
+    album: "img/VIP.jpg",
+    background: "img/VIP.jpg",
+  },
+  {
+    songName: "EPISODE 11",
+    music: "/music player/music/EP 11.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 12",
+    music: "/music player/music/EP 12.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 13",
+    music: "/music player/music/EP 13.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 14",
+    music: "/music player/music/EP 14.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 15",
+    music: "/music player/music/EP 15.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 16",
+    music: "/music player/music/EP 16.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 17",
+    music: "/music player/music/EP 17.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 18",
+    music: "/music player/music/EP 18.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 19",
+    music: "/music player/music/EP 19.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 20",
+    music: "/music player/music/EP 20.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 21",
+    music: "/music player/music/EP 21.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 22",
+    music: "/music player/music/EP 22.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 23",
+    music: "/music player/music/EP 23.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 24",
+    music: "/music player/music/EP 24.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  },
+  {
+    songName: "EPISODE 25",
+    music: "/music player/music/EP 25.m4a",
+    album: "img/mrsandman.jpg",
+    background: "img/sky4.jpg",
+  }
 ];
 let updateTrack;
 let isMixBtnClick,
@@ -311,5 +413,8 @@ function addNewSong() {
     };
     SONG_LIST.push(newSongObj);
     localStorage.setItem("addedSongs", JSON.stringify(newSongObj));
+    
+    functi
+
   }
 }
